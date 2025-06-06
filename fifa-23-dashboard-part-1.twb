@@ -4,6 +4,8 @@
 <workbook original-version='18.1' source-build='2025.1.2 (20251.25.0520.1026)' source-platform='mac' version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
   <document-format-change-manifest>
     <AnimationOnByDefault />
+    <IntuitiveSorting />
+    <IntuitiveSorting_SP2 />
     <MarkAnimation />
     <ObjectModelEncapsulateLegacy />
     <ObjectModelExtractV2 />
@@ -705,11 +707,22 @@
         </metadata-records>
       </connection>
       <aliases enabled='yes' />
+      <column caption='exclude-clubs-country' datatype='boolean' name='[Calculation_165788779197685760]' role='dimension' type='nominal'>
+        <calculation class='tableau' formula='[Club]!=[Country]' />
+      </column>
+      <column caption='top-club-avg-ratings' datatype='string' name='[Calculation_165788779203596289]' role='measure' type='nominal'>
+        <calculation class='tableau' formula='IF RANK(AVG([Overall])) = 1&#10;THEN &quot;Top Club&quot;&#10;ELSE &quot;Other Clubs&quot;&#10;END'>
+          <table-calc ordering-type='Rows' />
+        </calculation>
+      </column>
       <column datatype='string' name='[Country]' role='dimension' semantic-role='[Country].[ISO3166_2]' type='nominal' />
       <column datatype='integer' name='[ID]' role='dimension' type='ordinal' />
       <column caption='fifa-23-dataset.csv' datatype='table' name='[__tableau_internal_object_id__].[fifa-23-dataset.csv_85F8218081B142E2A4747C9D3792C6B3]' role='measure' type='quantitative' />
+      <column-instance column='[Calculation_165788779203596289]' derivation='User' name='[usr:Calculation_165788779203596289:nk]' pivot='key' type='nominal'>
+        <table-calc ordering-type='Columns' />
+      </column-instance>
       <extract _.fcp.VConnDownstreamExtractsWithWarnings.true...user-specific='false' count='-1' enabled='true' object-id='' units='records'>
-        <connection access_mode='readonly' author-locale='en_US' class='hyper' dbname='/var/folders/dn/v1s4f5b14_d8qt9wkt29wjdh0000gn/T/tableau-temp/#TableauTemp_1u1lwyw09cs1di10a800p1tzwyag.hyper' default-settings='hyper' schema='Extract' sslmode='' tablename='Extract' update-time='06/06/2025 08:41:58 AM' username='tableau_internal_user'>
+        <connection access_mode='readonly' author-locale='en_US' class='hyper' dbname='/var/folders/dn/v1s4f5b14_d8qt9wkt29wjdh0000gn/T/tableau-temp/#TableauTemp_05koxsd15i103r1amcoob0nss75p.hyper' default-settings='hyper' schema='Extract' sslmode='' tablename='Extract' update-time='06/06/2025 09:19:35 AM' username='tableau_internal_user'>
           <relation name='Extract' table='[Extract].[Extract]' type='table' />
           <metadata-records>
             <metadata-record class='column'>
@@ -1408,6 +1421,18 @@
         </connection>
       </extract>
       <layout dim-ordering='alphabetic' measure-ordering='alphabetic' show-structure='true' />
+      <style>
+        <style-rule element='mark'>
+          <encoding attr='color' field='[usr:Calculation_165788779203596289:nk]' type='palette'>
+            <map to='#38598b'>
+              <bucket>&quot;Top Club&quot;</bucket>
+            </map>
+            <map to='#96b1d1'>
+              <bucket>&quot;Other Clubs&quot;</bucket>
+            </map>
+          </encoding>
+        </style-rule>
+      </style>
       <semantic-values>
         <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
       </semantic-values>
@@ -1479,29 +1504,768 @@
     </datasource>
   </datasources>
   <worksheets>
-    <worksheet name='Sheet 1'>
+    <worksheet name='1-clubs-avg-ratings'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run bold='true' fontcolor='#215296' fontname='Arial Rounded MT Bold' fontsize='20'>Top 10 Clubs with Highest Average Player Ratings</run>
+          </formatted-text>
+        </title>
+      </layout-options>
       <table>
         <view>
-          <datasources />
+          <datasources>
+            <datasource caption='fifa-23-dataset' name='federated.0fb0lot1ktscst15e7g120xkpexr' />
+          </datasources>
+          <datasource-dependencies datasource='federated.0fb0lot1ktscst15e7g120xkpexr'>
+            <column caption='exclude-clubs-country' datatype='boolean' name='[Calculation_165788779197685760]' role='dimension' type='nominal'>
+              <calculation class='tableau' formula='[Club]!=[Country]' />
+            </column>
+            <column caption='top-club-avg-ratings' datatype='string' name='[Calculation_165788779203596289]' role='measure' type='nominal'>
+              <calculation class='tableau' formula='IF RANK(AVG([Overall])) = 1&#10;THEN &quot;Top Club&quot;&#10;ELSE &quot;Other Clubs&quot;&#10;END'>
+                <table-calc ordering-type='Rows' />
+              </calculation>
+            </column>
+            <column datatype='string' name='[Club]' role='dimension' type='nominal' />
+            <column datatype='string' name='[Country]' role='dimension' semantic-role='[Country].[ISO3166_2]' type='nominal' />
+            <column datatype='integer' name='[Overall]' role='measure' type='quantitative' />
+            <column-instance column='[Overall]' derivation='Avg' name='[avg:Overall:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_165788779197685760]' derivation='None' name='[none:Calculation_165788779197685760:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Club]' derivation='None' name='[none:Club:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_165788779203596289]' derivation='User' name='[usr:Calculation_165788779203596289:nk]' pivot='key' type='nominal'>
+              <table-calc ordering-type='Columns' />
+            </column-instance>
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0fb0lot1ktscst15e7g120xkpexr].[none:Calculation_165788779197685760:nk]'>
+            <groupfilter function='member' level='[none:Calculation_165788779197685760:nk]' member='true' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.0fb0lot1ktscst15e7g120xkpexr].[none:Club:nk]'>
+            <groupfilter count='10' end='top' function='end' units='records' user:ui-marker='end' user:ui-top-by-field='true'>
+              <groupfilter direction='DESC' expression='AVG([Overall])' function='order' user:ui-marker='order'>
+                <groupfilter function='union' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate'>
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;1. FC Heidenheim 1846&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;1. FC Kaiserslautern&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;1. FC Köln&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;1. FC Magdeburg&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;1. FC Nürnberg&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;1. FC Saarbrücken&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;1. FC Union Berlin&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;1. FSV Mainz 05&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;9 de Octubre&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Aalborg BK&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Aalesunds FK&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Aarhus GF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Aberdeen&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Abha Club&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;AC Ajaccio&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;AC Horsens&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;AC Milan&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;AC Monza&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;AC Sparta Praha&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Accrington Stanley&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Adana Demirspor&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Adelaide United&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;AEK Athens&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;AFC Bournemouth&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;AFC Chindia Târgoviște&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;AFC Hermannstadt&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;AFC UTA Arad&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;AFC Wimbledon&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;AIK&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;AJ Auxerre&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Ajax&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Al Adalah&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Al Ain FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Al Batin&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Al Fateh&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Al Fayha&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Al Hilal&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Al Ittihad&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Al Khaleej&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Al Nassr&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Al Raed&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Al Shabab&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Al Taawoun&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Al Tai&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Al Wehda&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Albacete BP&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;América de Cali&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;América Futebol Clube&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Amiens SC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Angers SCO&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Antalyaspor&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;APOEL Nicosia FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Argentinos Juniors&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Arsenal&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Arsenal de Sarandí&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;AS Monaco&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;AS Saint-Étienne&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Ascoli&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Aston Villa&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Atakaş Hatayspor&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Atalanta&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Athletic Club de Bilbao&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;ATK Mohun Bagan FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Atlanta United&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Atlético Clube Goianiense&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Atlético de Madrid&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Atlético Nacional&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Atlético Tucumán&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Austin FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Austria Lustenau&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Ayacucho&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Aytemiz Alanyaspor&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;AZ Alkmaar&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Barcelona Sporting Club&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Bari&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Barnsley&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Barracas Central&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Barrow&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Bayer 04 Leverkusen&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Beijing Guoan FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Benevento&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Bengaluru FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Beşiktaş JK&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Birmingham City&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;BK Häcken&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Blackburn Rovers&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Blackpool&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Boavista FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Boca Juniors&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Bohemian FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Bologna&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Bolton Wanderers&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Borussia Dortmund&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Borussia Dortmund II&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Borussia Mönchengladbach&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Bradford City&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Brentford&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Brescia&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Brighton &amp; Hove Albion&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Brisbane Roar&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Bristol City&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Bristol Rovers&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Brøndby IF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;BSC Young Boys&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Burgos CF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Burnley&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Burton Albion&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;C.D. Universidad Católica del Ecuador&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;CA Osasuna&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Cádiz CF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Cagliari&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Cambridge United&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Campionii FC Arges&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Caracas Fútbol Club&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Cardiff City&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Carlisle United&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Casa Pia&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;CD Antofagasta&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;CD Everton de Viña del Mar&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;CD Leganés&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;CD Lugo&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;CD Mirandés&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;CD Tenerife&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Ceará Sporting Club&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Celtic&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Central Coast Mariners&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Cerro Largo Fútbol Club&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;CFR Cluj&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Chamois Niortais Football Club&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Changchun Yatai FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Charlotte FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Charlton Athletic&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Chelsea&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Cheltenham Town&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Chengdu Rongcheng F.C.&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Chennaiyin FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Chicago Fire Football Club&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Cienciano&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Cittadella&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Clermont Foot 63&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Alianza Lima&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Always Ready&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Athletico Paranaense&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Atlético Aldosivi&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Atlético Banfield&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Atlético Central Córdoba&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Atlético Colón&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Atlético Huracán&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Atlético Independiente&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Atlético Lanús&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Atlético Peñarol&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Atlético River Plate&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Atlético Sarmiento&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Atlético Talleres&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Atlético Tigre&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Brugge KV&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Cerro Porteño&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club de Foot Montréal&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Deportes Tolima&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Deportivo Guabirá&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Deportivo Jorge Wilstermann&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Deportivo Oriente Petrolero&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Libertad&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Nacional&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Nacional de Football&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Olimpia&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Sol de América&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club Sporting Cristal&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Club The Strongest&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Clube Atlético Mineiro&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Clube Sport Marítimo&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Colchester United&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Colo-Colo&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Colorado Rapids&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Columbus Crew&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Como&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Cosenza&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Coventry City&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Cracovia&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Crawley Town&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Crewe Alexandra&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Crystal Palace&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;CS Emelec&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;CS Mioveni&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Cuiabá&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;D.C. United&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Daegu FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Dalian Professional Football Club&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Damac FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Defensa y Justicia&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Degerfors IF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Delfín Sporting Club&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Demir Grup Sivasspor&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Deportivo Alavés&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Deportivo Cali&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Deportivo La Guaira FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Deportivo Ñublense&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Deportivo Táchira FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Derby County&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Derry City&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Dijon FCO&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Dinamo Zagreb&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Djurgårdens IF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Doncaster Rovers&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Drogheda United&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;DSC Arminia Bielefeld&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Dundalk FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Dundee United&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Dynamo Kyiv&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Eintracht Braunschweig&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Eintracht Frankfurt&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Elche CF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Empoli&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;En Avant de Guingamp&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;ESTAC Troyes&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Estoril Praia&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Estudiantes de La Plata&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Estudiantes de Mérida&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Ettifaq FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Everton&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Excelsior&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Exeter City&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;F.C. Hansa Rostock&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;F.C. København&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Fatih Karagümrük S.K.&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FBC Melgar&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Andorra&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Annecy&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Arouca&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Augsburg&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Barcelona&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Basel 1893&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Bayern München&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Botoşani&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Cartagena&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Cincinnati&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Dallas&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Emmen&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Erzgebirge Aue&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Farul Constanța&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Girondins de Bordeaux&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Goa&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Groningen&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Ingolstadt 04&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Lorient&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Lugano&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Luzern&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Metz&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Midtjylland&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Nantes&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Nordsjælland&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Paços de Ferreira&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Porto&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Red Bull Salzburg&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Schalke 04&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Seoul&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Sion&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Sochaux-Montbéliard&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC St. Gallen 1879&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC St. Pauli&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Twente&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC U Craiova 1948&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Utrecht&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Viktoria Plzeň&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Vizela&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Volendam&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Voluntari&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Winterthur&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FC Zürich&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FCSB (Steaua)&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Fenerbahçe SK&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Ferencvárosi TC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Feyenoord&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Finn Harps&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Fiorentina&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FK Austria Wien&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FK Bodø/Glimt&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FK Haugesund&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FK Jerv&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Flamengo&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Fleetwood Town&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Fluminense&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Forest Green Rovers&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Fortaleza&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Fortuna Düsseldorf&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Fortuna Sittard&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Frosinone&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;FSV Zwickau&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Fulham&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Futebol Clube de Famalicão&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Galatasaray SK&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Gangwon FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Gazişehir Gaziantep F.K.&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;GD Chaves&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;General Caballero (JLM)&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Genoa&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Getafe CF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;GIF Sundsvall&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Gil Vicente FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Gillingham&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Gimnasia y Esgrima La Plata&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Girona FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Go Ahead Eagles&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Godoy Cruz&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Górnik Zabrze&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Granada CF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Grasshopper Club Zürich&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Grenoble Foot 38&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Grimsby Town&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Guaireña FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Guangzhou City&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Guangzhou FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;GZT Giresunspor&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Hajduk Split&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Hallescher FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Hamarkameratene&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Hamburger SV&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Hammarby IF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Hannover 96&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Harrogate Town&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Hartlepool United&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Heart of Midlothian&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Hebei FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Hellas Verona&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Helsingborgs IF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Henan Songshan Longmen FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Hermanos Colmenarez&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Hertha BSC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Hibernian&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;HJK Helsinki&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Holstein Kiel&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Houston Dynamo&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Huddersfield Town&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Hull City&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Hyderabad FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;IF Elfsborg&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;IFK Göteborg&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;IFK Norrköping&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;IFK Värnamo&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;IK Sirius&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Incheon United FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Independiente del Valle&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Independiente Medellín&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Independiente Petrolero&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Inter&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Inter Miami CF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Internacional&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Ipswich Town&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;İstanbul Başakşehir FK&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;İstanbulspor&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;İttifak Holding Konyaspor&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Jagiellonia Białystok&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Jamshedpur FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Jeju United FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Jeonbuk Hyundai Motors&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Junior FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Juventus&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;KAA Gent&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Kaizer Chiefs&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Kalmar FF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Karlsruher SC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;KAS Eupen&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Kasimpaşa SK&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Kerala Blasters FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Kilmarnock&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Korona Kielce&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;KRC Genk&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Kristiansund BK&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;KSV Cercle Brugge&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;KV Kortrijk&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;KV Mechelen&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;KV Oostende&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;KVC Westerlo&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;La Equidad&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;LA Galaxy&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;LASK Linz&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Lazio&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;LDU Quito&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Le Havre AC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Lecce&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Lech Poznań&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Lechia Gdańsk&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Leeds United&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Legia Warszawa&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Leicester City&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Levante Unión Deportiva&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Leyton Orient&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Lillestrøm SK&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Lincoln City&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Liverpool&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Liverpool Fútbol Club&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Livingston FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Los Angeles FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;LOSC Lille&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Luton Town&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Lyngby BK&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Macarthur FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Málaga CF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Malmö FF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Mamelodi Sundowns FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Manchester City&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Manchester United&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Mansfield Town&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Meizhou Hakka&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Melbourne City FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Melbourne Victory&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Metropolitanos de Caracas FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Middlesbrough&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Miedź Legnica&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Millwall&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Milton Keynes Dons&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Minnesota United FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Mjällby AIF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;MKE Ankaragücü&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Modena&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Molde FK&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Montevideo Wanderers&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Montpellier Hérault SC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Morecambe&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Motherwell&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;MSV Duisburg&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Mumbai City FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Mushuc Runa&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;N.E.C. Nijmegen&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Napoli&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Nashville SC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;New England Revolution&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;New York City FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;New York Red Bulls&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Newcastle Jets&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Newcastle United&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Newell&apos;s Old Boys&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Newport County&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Nîmes Olympique&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;None&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Northampton Town&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;NorthEast United FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Norwich City&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Nottingham Forest&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Odds BK&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Odense Boldklub&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Odisha FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;OGC Nice&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Olympique de Marseille&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Olympique Lyonnais&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Orlando City Soccer Club&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Orlando Pirates&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Oud-Heverlee Leuven&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Oxford United&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Palermo&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Palmeiras&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Panathinaikos FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;PAOK&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Paris FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Paris Saint-Germain&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Parma&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Patronato&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Pau FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Perth Glory&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Perugia&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Peterborough United&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Petrolul Ploiești&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;PGE FKS Stal Mielec&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Philadelphia Union&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Piast Gliwice&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Pisa&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Platense&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Plymouth Argyle&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Pogoń Szczecin&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Pohang Steelers&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Port Vale&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Portimonense SC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Portland Timbers&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Portsmouth&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Preston North End&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;PSV&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Queens Park Rangers&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Racing Club&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Racing Club de Lens&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Racing Santander&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Radomiak Radom&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Raków Częstochowa&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Randers FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Rangers FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Rapid București&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Rayo Vallecano&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;RB Bragantino&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;RB Leipzig&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;RC Celta de Vigo&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;RC Strasbourg Alsace&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;RCD Espanyol de Barcelona&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;RCD Mallorca&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Reading&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Real Betis Balompié&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Real Madrid CF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Real Oviedo&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Real Salt Lake&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Real Sociedad&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Real Sporting de Gijón&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Real Valladolid CF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Real Zaragoza&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Rio Ave FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;River Plate&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;RKC Waalwijk&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Rochdale&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Rodez Aveyron Football&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Roma&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Rosario Central&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Rosenborg BK&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Ross County FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Rot-Weiß Essen&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Rotherham United&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Royal Antwerp FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Royal Charleroi S.C.&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Royal Pari&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Royale Union Saint-Gilloise&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;RSC Anderlecht&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;RZ Pellets Wolfsberger AC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Salford City&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;San Jose Earthquakes&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;San Lorenzo de Almagro&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Sandefjord Fotball&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Sangju Sangmu FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Santa Clara&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Santos&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;São Paulo&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Sarpsborg 08 FF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SC Bastia&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SC Braga&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SC Cambuur&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SC East Bengal FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SC Freiburg II&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SC Heerenveen&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SC Paderborn 07&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SC Rheindorf Altach&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SD Eibar&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SD Huesca&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SD Ponferradina&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Seattle Sounders FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Seongnam FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Sepsi OSK Sf. Gheorghe&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Seraing&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Servette FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Sevilla FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SG Dynamo Dresden&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Shakhtar Donetsk&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Shamrock Rovers&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Shandong Taishan&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Shanghai Port FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Shanghai Shenhua FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Sheffield United&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Sheffield Wednesday&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Shelbourne FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Shenzhen FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Shijiazhuang Ever Bright F.C.&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Shrewsbury Town&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Silkeborg IF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Sint-Truidense VV&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SK Austria Klagenfurt&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SK Rapid Wien&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SK Slavia Praha&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SK Sturm Graz&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SL Benfica&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Śląsk Wrocław&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Sligo Rovers&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Southampton&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SPAL&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Sparta Rotterdam&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Spezia&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Sport Boys&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Sport Club Corinthians Paulista&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Sport-Club Freiburg&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Sportclub Verl&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Sporting CP&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Sporting Kansas City&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SpVgg Bayreuth&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SpVgg Greuther Fürth&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SSV Jahn Regensburg&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;St. Johnstone FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;St. Mirren&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;St. Patrick&apos;s Athletic&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Stade Brestois 29&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Stade de Reims&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Stade Lavallois Mayenne FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Stade Malherbe Caen&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Stade Rennais FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Standard de Liège&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Stevenage&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Stockport County&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Stoke City&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Strømsgodset IF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Südtirol&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Sunderland&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Sutton United&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Suwon FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Suwon Samsung Bluewings&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SV Darmstadt 98&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SV Elversberg&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SV Meppen&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SV Ried&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SV Sandhausen&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SV Waldhof Mannheim 07&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SV Wehen Wiesbaden&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SV Werder Bremen&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;SV Zulte Waregem&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Swansea City&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Swindon Town&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Sydney FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Ternana&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Tianjin Jinmen Tiger FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Torino F.C.&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Toronto FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Tottenham Hotspur&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Toulouse Football Club&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Trabzonspor&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Tranmere Rovers&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Tromsø IL&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;TSG Hoffenheim&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;TSV 1860 München&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;TSV Egger Glas Hartberg&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;U.C. Sampdoria&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;U.S. Sassuolo Calcio&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;UCD AFC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;UD Ibiza&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Udinese Calcio&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Ulsan Hyundai FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Ümraniyespor&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Unión de Santa Fe&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Unión Deportiva Almería&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Unión Deportiva Las Palmas&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Unión Española&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Unión La Calera&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Universidad Católica&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Universitatea Cluj&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Universitatea Craiova&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Urbs Reggina 1914&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;US Cremonese&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;US Quevilly Rouen Métropole&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;US Salernitana 1919&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Valencia CF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Valenciennes FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Vålerenga Fotball&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Vancouver Whitecaps FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Varbergs BoIS FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Vélez Sarsfield&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Venezia FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;VfB Oldenburg&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;VfB Stuttgart&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;VfL Bochum 1848&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;VfL Osnabrück&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;VfL Wolfsburg&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Viborg FF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Viking FK&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Viktoria Köln&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Villarreal CF&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Villarreal Club de Fútbol B&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Vitesse&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Vitória de Guimarães&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Walsall&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Warta Poznań&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Watford&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Wellington Phoenix&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;West Bromwich Albion&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;West Ham United&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Western Sydney Wanderers&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Western United FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Widzew Łódź&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Wigan Athletic&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Wisła Płock&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Wolverhampton Wanderers&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Wrexham AFC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;WSG Tirol&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Wuhan FC&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Wuhan Three Towns&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Wycombe Wanderers&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Yukatel Kayserispor&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Zagłębie Lubin&quot;' />
+                  <groupfilter function='member' level='[none:Club:nk]' member='&quot;Zhejiang Professional FC&quot;' />
+                </groupfilter>
+              </groupfilter>
+            </groupfilter>
+          </filter>
+          <shelf-sorts>
+            <shelf-sort-v2 dimension-to-sort='[federated.0fb0lot1ktscst15e7g120xkpexr].[none:Club:nk]' direction='DESC' is-on-innermost-dimension='true' measure-to-sort-by='[federated.0fb0lot1ktscst15e7g120xkpexr].[avg:Overall:qk]' shelf='rows' />
+          </shelf-sorts>
+          <slices>
+            <column>[federated.0fb0lot1ktscst15e7g120xkpexr].[none:Calculation_165788779197685760:nk]</column>
+            <column>[federated.0fb0lot1ktscst15e7g120xkpexr].[none:Club:nk]</column>
+          </slices>
           <aggregation value='true' />
         </view>
-        <style />
+        <style>
+          <style-rule element='field-labels'>
+            <format attr='font-family' value='Arial Rounded MT Bold' />
+          </style-rule>
+          <style-rule element='label'>
+            <format attr='font-family' field='[federated.0fb0lot1ktscst15e7g120xkpexr].[none:Club:nk]' value='Arial Rounded MT Bold' />
+          </style-rule>
+        </style>
         <panes>
-          <pane selection-relaxation-option='selection-relaxation-allow'>
+          <pane id='1' selection-relaxation-option='selection-relaxation-allow'>
             <view>
               <breakdown value='auto' />
             </view>
             <mark class='Automatic' />
+            <encodings>
+              <color column='[federated.0fb0lot1ktscst15e7g120xkpexr].[usr:Calculation_165788779203596289:nk]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-color' value='#38598b' />
+              </style-rule>
+            </style>
           </pane>
         </panes>
-        <rows />
-        <cols />
+        <rows>[federated.0fb0lot1ktscst15e7g120xkpexr].[none:Club:nk]</rows>
+        <cols>[federated.0fb0lot1ktscst15e7g120xkpexr].[avg:Overall:qk]</cols>
       </table>
       <simple-id uuid='{A42C0135-4155-4596-B729-14CABAC522EA}' />
     </worksheet>
   </worksheets>
   <windows source-height='30'>
-    <window class='worksheet' maximized='true' name='Sheet 1'>
+    <window class='worksheet' maximized='true' name='1-clubs-avg-ratings'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -1521,39 +2285,574 @@
             <card type='title' />
           </strip>
         </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='1' param='[federated.0fb0lot1ktscst15e7g120xkpexr].[usr:Calculation_165788779203596289:nk]' type='color' />
+          </strip>
+        </edge>
       </cards>
+      <viewpoint>
+        <zoom type='fit-width' />
+        <highlight>
+          <color-one-way>
+            <field>[federated.0fb0lot1ktscst15e7g120xkpexr].[avg:Personal Index of Performance:qk]</field>
+            <field>[federated.0fb0lot1ktscst15e7g120xkpexr].[none:Calculation_165788779197685760:nk]</field>
+            <field>[federated.0fb0lot1ktscst15e7g120xkpexr].[none:Club:nk]</field>
+            <field>[federated.0fb0lot1ktscst15e7g120xkpexr].[usr:Calculation_165788779203596289:nk]</field>
+          </color-one-way>
+        </highlight>
+      </viewpoint>
       <simple-id uuid='{E5A5DC2D-B28A-4AF9-9B63-50C35DD41ED5}' />
     </window>
   </windows>
   <thumbnails>
-    <thumbnail height='384' name='Sheet 1' width='384'>
+    <thumbnail height='384' name='1-clubs-avg-ratings' width='384'>
       iVBORw0KGgoAAAANSUhEUgAAAYAAAAGACAYAAACkx7W/AAAACXBIWXMAAA7DAAAOwwHHb6hk
-      AAAFXUlEQVR4nO3VMQEAIAzAMMC/5yFjRxMF/XpnZg4AOW87AIAdBgAQZQAAUQYAEGUAAFEG
-      ABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAA
-      UQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBl
-      AABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYA
-      EGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABR
-      BgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUA
-      AFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQ
-      ZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEG
-      ABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAA
-      UQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBl
-      AABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYA
-      EGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABR
-      BgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUA
-      AFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQ
-      ZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEG
-      ABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAA
-      UQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBl
-      AABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYA
-      EGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABR
-      BgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUA
-      AFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQ
-      ZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEG
-      ABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAA
-      UQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBl
-      AABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEGABBlAABRBgAQZQAAUQYA
-      EGUAAFEGABBlAABRBgAQZQAAUQYAEGUAAFEfFxoG/IiMv0YAAAAASUVORK5CYII=
+      AAAgAElEQVR4nOzdV3Qb55n4/++gF4IgCTaxiWAXRYkqFq1iFduKJcdyiRTv2rGziZOTtkku
+      crN7m/M7Z8vNnrPZsy3eONnYjiM7dtxlFcuyJIpUpyhS7BR7AUkQIAgQfeZ/wcX8SasndkQZ
+      7+ccWyJmMPNiCL3PzPM2SVEUBUEQBCHpaO52AQRBEIS7QwQAQRCEJCUCgCAIQpISAUAQBCFJ
+      iQAgCIKQpEQAEARBSFIiAAiCICQpEQAEQRCSlAgAgiAISUoEAEEQhCQlAoAgCEKSEgFAEAQh
+      SYkAIAiCkKREABAEQUhSIgAIgiAkKREABEEQkpQIAIIgCElKBABBEIQkJQKAIAhCkhIBQBAE
+      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
+      nUSjUQBOnz7NN7/5TZxOJwMDA/zmN79hamoKo9GoLlB/8uRJHnzwQZ566in1PQcPHmR4eJgf
+      //jHeDwe3n77bbRaLZcvX6a7u5t4PI4syzQ2NvLss89SXV19TzZ4C8KfYkkHgM7OTqanpwkE
+      Aly+fJmJiQkACgsL0el0tLS0MDw8TF5eHjt27MDhcHDhwgVOnjzJyZMnefzxx7FarczMzCDL
+      Mm63m8LCQjZu3Mjs7CxlZWWEw2GCwSAWi4VQKITH46GxsZFYLMZjjz1GRUUFFy9e5MSJE7S2
+      trJ582YyMzMXlVOr1VJbW0traysDAwO0tLTQ2tpKeno6y5cvp7q6mvXr1yNJEpFIhMbGRiYm
+      Jli9ejUbN27EYDBw+PBhurq6OH/+PLW1teoC9MFgUF13NxgMoigKHR0d1NTUUFNTw5UrV2hp
+      aaGpqYmtW7eydu1aJicn+fTTT7FYLGzfvp21a9fesBeMy+UCwGq1kpWVpVZ+sVgMt9tNPB4n
+      NTWV9PR09c46kdLy+XysXbuWTZs24XK5OHToEI2NjeTk5LBz5041nRcMBklNTWXHjh2Ew2H1
+      Tj4ejwPz7R27d+9mamqKhoYGxsbGmJ6eZvPmzciyzJkzZxgdHaW1tZXly5dz4cIFJiYmWL58
+      OTt27CA1NZWGhgbOnTvHp59+yp49e9DpdOrawD6fD5hPjUWjUaLRKENDQ+zYsQO9Xs/JkyeZ
+      nJzkzJkzlJWV3fZa1IJwr1vSAeDAgQNoNBri8TjRaBSdTkdVVRWbNm1Cp9ORn5/PqlWr2LZt
+      GwUFBYRCIbVxOBaLMTU1hdVqVVMoFouFp556isrKSuLxOHq9nsuXLy86Z6LrZCwW4+rVq+Tl
+      5bFp0yYKCgpITU0lLS3tumUtLCzk+9//Ph9//DE9PT1MT0/j9XqZnp7mypUrdHR08Nxzz2E0
+      GikpKUGWZfbu3YvRaMTv95Oeno4kSUxNTal3vTeSlZXFs88+i8PhIDc3l5aWFuLxOB6Ph9LS
+      UioqKjh+/Dgmk0lNbYRCITUQwvyUxna7Hb/fD8wHsYVpsLfffptz584tyrFv2bKFxx9/nK6u
+      LiYmJrDZbNTV1bF8+XIKCgro6+vj/PnzXL58mZ07d7JwpvGHHnqInTt3IssyGo2GyclJdVtd
+      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
+      /T+YZitinRI/aAAAAABJRU5ErkJggg==
     </thumbnail>
   </thumbnails>
 </workbook>
