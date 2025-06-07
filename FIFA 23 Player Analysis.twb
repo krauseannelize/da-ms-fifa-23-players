@@ -17,7 +17,7 @@
     <_.fcp.VConnDownstreamExtractsWithWarnings.true...VConnDownstreamExtractsWithWarnings />
     <WindowsPersistSimpleIdentifiers />
   </document-format-change-manifest>
-  <repository-location id='FIFA23Dashboard' path='/workbooks' revision='1.1' />
+  <repository-location id='FIFA23Dashboard' path='/workbooks' revision='1.0' />
   <preferences>
     <preference name='ui.encoding.shelf.height' value='24' />
     <preference name='ui.shelf.height' value='26' />
@@ -1507,40 +1507,6 @@
       <layout dim-ordering='alphabetic' measure-ordering='alphabetic' show-structure='true' />
       <style>
         <style-rule element='mark'>
-          <encoding attr='color' field='[usr:Calculation_165788779203596289:nk]' type='palette'>
-            <map to='#01549a'>
-              <bucket>&quot;Top Club&quot;</bucket>
-            </map>
-            <map to='#68b1ff'>
-              <bucket>&quot;Other Clubs&quot;</bucket>
-            </map>
-          </encoding>
-          <encoding attr='color' field='[none:Calculation_289778506487549952:nk]' palette='blue_teal_10_0' type='palette'>
-            <map to='#01549a'>
-              <bucket>&quot;4 | Underperforming&quot;</bucket>
-            </map>
-            <map to='#2a5783'>
-              <bucket>&quot;Underperforming&quot;</bucket>
-            </map>
-            <map to='#2e76bf'>
-              <bucket>&quot;3 | Needs Development&quot;</bucket>
-            </map>
-            <map to='#378ee7'>
-              <bucket>&quot;2 | Getting There&quot;</bucket>
-            </map>
-            <map to='#5081ae'>
-              <bucket>&quot;Needs Development&quot;</bucket>
-            </map>
-            <map to='#68b1ff'>
-              <bucket>&quot;1 | Meets Expectations&quot;</bucket>
-            </map>
-            <map to='#7eaed3'>
-              <bucket>&quot;Meets Expectations&quot;</bucket>
-            </map>
-            <map to='#b9ddf1'>
-              <bucket>&quot;Getting There&quot;</bucket>
-            </map>
-          </encoding>
           <encoding attr='color' field='[:Measure Names]' palette='color_blind_10_0' type='palette'>
             <map to='#01549a'>
               <bucket>&quot;[federated.0fb0lot1ktscst15e7g120xkpexr].[med:Dribbling:qk]&quot;</bucket>
@@ -1661,6 +1627,40 @@
             </map>
             <map to='#ffbe7d'>
               <bucket>&quot;[federated.0fb0lot1ktscst15e7g120xkpexr].[sum:Aggression:qk]&quot;</bucket>
+            </map>
+          </encoding>
+          <encoding attr='color' field='[none:Calculation_289778506487549952:nk]' palette='blue_teal_10_0' type='palette'>
+            <map to='#01549a'>
+              <bucket>&quot;4 | Underperforming&quot;</bucket>
+            </map>
+            <map to='#2a5783'>
+              <bucket>&quot;Underperforming&quot;</bucket>
+            </map>
+            <map to='#2e76bf'>
+              <bucket>&quot;3 | Needs Development&quot;</bucket>
+            </map>
+            <map to='#378ee7'>
+              <bucket>&quot;2 | Getting There&quot;</bucket>
+            </map>
+            <map to='#5081ae'>
+              <bucket>&quot;Needs Development&quot;</bucket>
+            </map>
+            <map to='#68b1ff'>
+              <bucket>&quot;1 | Meets Expectations&quot;</bucket>
+            </map>
+            <map to='#7eaed3'>
+              <bucket>&quot;Meets Expectations&quot;</bucket>
+            </map>
+            <map to='#b9ddf1'>
+              <bucket>&quot;Getting There&quot;</bucket>
+            </map>
+          </encoding>
+          <encoding attr='color' field='[usr:Calculation_165788779203596289:nk]' type='palette'>
+            <map to='#01549a'>
+              <bucket>&quot;Top Club&quot;</bucket>
+            </map>
+            <map to='#68b1ff'>
+              <bucket>&quot;Other Clubs&quot;</bucket>
             </map>
           </encoding>
         </style-rule>
