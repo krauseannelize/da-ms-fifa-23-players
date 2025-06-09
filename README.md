@@ -1,11 +1,13 @@
 # FIFA 23 Player Analysis Dashboard
 
 ## Tools & Skills Used
-![Tableau](https://img.shields.io/badge/Tableau-Dashboard-%235778a4)  
-![Tableau](https://img.shields.io/badge/Tableau-Data%20Analysis-%235778a4)  
+
+![Tableau](https://img.shields.io/badge/Tableau-Dashboard-%235778a4)
+![Tableau](https://img.shields.io/badge/Tableau-Data%20Analysis-%235778a4)
 ![Tableau](https://img.shields.io/badge/Tableau-Interactive%20Filtering-%235778a4)  
 
 ## Quick Access
+
 - [Raw Data](/fifa-23-dataset.csv)
 - [Metadata](/fifa-23-metadata.md)
 
