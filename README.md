@@ -37,3 +37,18 @@ Dashboard to include:
 - visualizations 1, 2, and 5,
 - a title, a subtitle with the purpose, and a logo of your choosing, and
 - optionally other filters and interactivity to help drill-down the visualization.
+
+## Part 2:
+
+In the second part of this project, the deep dive into player data continues to create impactful visualizations. The additional questions to answer are:
+
+1. **Histogram:** Analyze the height distribution of the highest-rated players with an overall rating exceeding 85
+2. **Box plot:** Compare sprint speed distributions across different player value categories with a category bin size of 10 million.
+3. **Filled map visualization:** Compare countries based on key player attributes, that includes:
+  - **Map View:**
+    - Use a filled map to display each country colored by the average score of a selected player attribute.
+    - Attribute examples include: `Acceleration`, `Aggression`, `Agility`, `Balance`, `Ball Control`, `Composure`, `Curve`, `Defensive Awareness`, `Diving`, `Dribbling`, and `Overall`.
+  - **Attribute Selector:** Add a parameter control to allow users to dynamically choose which attribute to visualize on the map.
+  - **Dynamic Coloring:** Color countries using a gradient scale based on the selected attribute's average value.
+  - **Tooltip Enhancements:** Display the country name and the exact average value of the selected attribute in the tooltip.
+  - **Highlighter Integration:** Add highlighters for player name, position, or club to support exploration by clicking or searching.
