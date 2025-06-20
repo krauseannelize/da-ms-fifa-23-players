@@ -31,3 +31,9 @@ In the first part of this project, the foundation is built with essential analyt
 7. **Bar chart:** Identify FIFA 23’s most expensive players based on market value
 
 The key objective is to deliver an interactive dashboard that allows users to explore key player trends using filters to drill down at country level. The goal is to understand how players from different countries fare in rating and wage, assess their growth potential, and analyze their contribution to club ratings.
+
+Dashboard to include:
+
+- visualizations 1, 2, and 5,
+- a title, a subtitle with the purpose, and a logo of your choosing, and
+- optionally other filters and interactivity to help drill-down the visualization.
