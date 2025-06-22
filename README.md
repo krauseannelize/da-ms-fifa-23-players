@@ -41,9 +41,9 @@ The key objective is to deliver an interactive dashboard that allows users to ex
 
 In the second part of this project, the deep dive into player data continues to create impactful visualizations. The additional questions to answer are:
 
-8. **Histogram:** Analyze the height distribution of the highest-rated players with an overall rating exceeding 85
-9. **Box plot:** Compare sprint speed distributions across different player value categories with a category bin size of 10 million.
-10. **Filled map visualization:** Compare countries based on key player attributes, that includes:
+1. **Histogram:** Analyze the height distribution of the highest-rated players with an overall rating exceeding 85
+2. **Box plot:** Compare sprint speed distributions across different player value categories with a category bin size of 10 million.
+3. **Filled map visualization:** Compare countries based on key player attributes, that includes:
 
 - **Map View:**
   - Use a filled map to display each country colored by the average score of a selected player attribute.
