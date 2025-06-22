@@ -3,6 +3,7 @@ Used: https://coolors.co/image-picker
 FIFA blue: #01549A
 YlnMn Blue: #38598B
 Saffron: #EFC20F
+Soft yellow: #FBEF99
 Powder blue: #96B1D1
 White: #FFFFFF
 Raw umber: #a66130
