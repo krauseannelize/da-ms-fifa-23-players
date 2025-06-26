@@ -30,13 +30,10 @@ Below is a breakdown of all columns in the dataset, including their data types a
 | **Weak Foot** | `int` | Rating (1-5) of the player’s non-dominant foot. |
 | **Skill Moves** | `int` | Rating (1-5) of the player's skill moves. |
 | **Height (m)** | `float` | Player’s height in meters. |
-| **Weight (kg)** | `int` | Player’s weight in kilograms. |
-| **Position** | `string` | Main position(s) the player plays. |
-| **Value (€)** | `float` | Player’s estimated market value in Euros. |
-| **Wage (€)** | `float` | Player’s weekly wage in Euros. |
-| **Release Clause (€)** | `float` | The buyout clause for the player’s contract. |
 | **Attacking Work Rate** | `string` | Player’s attacking tendencies (Low/Med/High). |
 | **Defensive Work Rate** | `string` | Player’s defensive tendencies (Low/Med/High). |
+| **Value (€)** | `float` | Player’s estimated market value in Euros. |
+| **Wage (€)** | `float` | Player’s weekly wage in Euros. |
 | **Crossing** | `int` | Accuracy of crosses (0-100). |
 | **Finishing** | `int` | Ability to finish goal-scoring chances (0-100). |
 | **Heading Accuracy** | `int` | Accuracy of headers (0-100). |
