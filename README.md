@@ -10,14 +10,14 @@
 
 - [Raw Data](/fifa-23-dataset.csv)
 - [Metadata](/fifa-23-metadata.md)
-- [Tableau Workbook](/fifa-23-dashboard-part-2.twbx)
-- [Tableau Public Dashboard](https://public.tableau.com/app/profile/annelize.krause/viz/FIFA23PlayerClubPerformanceInsights/PerformanceInsights)
+- [Tableau Workbook](/fifa-23-dashboard-revised.twbx)
+- [Tableau Public Dashboard](https://public.tableau.com/app/profile/annelize.krause/viz/FIFA23PlayerInsights/PerformanceInsights)
 
 ## Project Overview
 
 This project is part of the Masterschool Data programme focusing on data visualization and analysis using Tableau. Through multiple phases, it explores real-world player data from FIFA 23, applying best practices in dashboard design and analytical storytelling. The project aims to develop hands-on experience with data visualization that answer key performance questions, refine visualization techniques, and uncover insights into team composition, scouting, and player valuation.
 
-The Tableau Public Dashboard can be [viewed online](https://public.tableau.com/app/profile/annelize.krause/viz/FIFA23PlayerClubPerformanceInsights/PerformanceInsights) and the workbook can be [downloaded here](/fifa-23-dashboard-part-2.twbx).
+The Tableau Public Dashboard can be [viewed online](https://public.tableau.com/app/profile/annelize.krause/viz/FIFA23PlayerInsights/PerformanceInsights) and the workbook can be [downloaded here](/fifa-23-dashboard-revised.twbx).
 
 ## Part 1: Initial Dashboard and Objectives
 
